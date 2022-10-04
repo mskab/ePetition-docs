@@ -1,0 +1,1361 @@
+components:
+  schemas:
+    Abuse:
+      description: An enumeration.
+      enum:
+      - Misleading or spam
+      - Infringes on my rights
+      - Abusive or hateful
+      - Inappropriate images
+      - Harmful to children
+      - Violence, suicide, or self harm
+      - Impersonation
+      - Other
+      title: Abuse
+    Body_login_user_auth_login_post:
+      properties:
+        client_id:
+          title: Client Id
+          type: string
+        client_secret:
+          title: Client Secret
+          type: string
+        grant_type:
+          pattern: password
+          title: Grant Type
+          type: string
+        password:
+          title: Password
+          type: string
+        scope:
+          default: ''
+          title: Scope
+          type: string
+        username:
+          title: Username
+          type: string
+      required:
+      - username
+      - password
+      title: Body_login_user_auth_login_post
+      type: object
+    ComplaintCreate:
+      properties:
+        abuse:
+          $ref: '#/components/schemas/Abuse'
+        description:
+          title: Description
+          type: string
+        owner_id:
+          title: Owner Id
+          type: integer
+        petition_id:
+          title: Petition Id
+          type: integer
+      required:
+      - abuse
+      - owner_id
+      - petition_id
+      title: ComplaintCreate
+      type: object
+    ComplaintInfo:
+      properties:
+        abuse:
+          $ref: '#/components/schemas/Abuse'
+        description:
+          title: Description
+          type: string
+        id:
+          title: Id
+          type: integer
+        owner_id:
+          title: Owner Id
+          type: integer
+        petition_id:
+          title: Petition Id
+          type: integer
+        status:
+          $ref: '#/components/schemas/api__db__models__complaint__Status'
+      required:
+      - abuse
+      - owner_id
+      - petition_id
+      - id
+      - status
+      title: ComplaintInfo
+      type: object
+    ComplaintUpdate:
+      properties:
+        status:
+          $ref: '#/components/schemas/api__db__models__complaint__Status'
+      required:
+      - status
+      title: ComplaintUpdate
+      type: object
+    DecisionMakerCreate:
+      properties:
+        affiliation:
+          title: Affiliation
+          type: string
+        email:
+          format: email
+          title: Email
+          type: string
+        naming:
+          title: Naming
+          type: string
+      required:
+      - naming
+      - email
+      title: DecisionMakerCreate
+      type: object
+    DecisionMakerInfo:
+      properties:
+        affiliation:
+          title: Affiliation
+          type: string
+        email:
+          format: email
+          title: Email
+          type: string
+        id:
+          title: Id
+          type: integer
+        is_verified:
+          title: Is Verified
+          type: boolean
+        naming:
+          title: Naming
+          type: string
+      required:
+      - naming
+      - email
+      - id
+      - is_verified
+      title: DecisionMakerInfo
+      type: object
+    DecisionMakerUpdate:
+      properties:
+        affiliation:
+          title: Affiliation
+          type: string
+        email:
+          format: email
+          title: Email
+          type: string
+        is_verified:
+          title: Is Verified
+          type: boolean
+        naming:
+          title: Naming
+          type: string
+      title: DecisionMakerUpdate
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    PetitionCreate:
+      properties:
+        country:
+          title: Country
+          type: string
+        decision_makers:
+          items:
+            type: integer
+          title: Decision Makers
+          type: array
+        description:
+          title: Description
+          type: string
+        due_date:
+          format: date
+          title: Due Date
+          type: string
+        image:
+          title: Image
+          type: string
+        owner_id:
+          title: Owner Id
+          type: integer
+        signed_goal:
+          title: Signed Goal
+          type: integer
+        title:
+          title: Title
+          type: string
+      required:
+      - title
+      - description
+      - signed_goal
+      - owner_id
+      - decision_makers
+      title: PetitionCreate
+      type: object
+    PetitionInfo:
+      properties:
+        country:
+          title: Country
+          type: string
+        creation_date:
+          format: date
+          title: Creation Date
+          type: string
+        decision_makers:
+          items:
+            $ref: '#/components/schemas/DecisionMakerInfo'
+          title: Decision Makers
+          type: array
+        description:
+          title: Description
+          type: string
+        due_date:
+          format: date
+          title: Due Date
+          type: string
+        id:
+          title: Id
+          type: integer
+        image:
+          title: Image
+          type: string
+        owner_id:
+          title: Owner Id
+          type: integer
+        signed_goal:
+          title: Signed Goal
+          type: integer
+        status:
+          $ref: '#/components/schemas/api__db__models__petition__Status'
+        supporters:
+          items:
+            $ref: '#/components/schemas/UserBase'
+          title: Supporters
+          type: array
+        title:
+          title: Title
+          type: string
+      required:
+      - title
+      - description
+      - signed_goal
+      - id
+      - status
+      - creation_date
+      - owner_id
+      - decision_makers
+      - supporters
+      title: PetitionInfo
+      type: object
+    PetitionSign:
+      properties:
+        supporter_id:
+          title: Supporter Id
+          type: integer
+      required:
+      - supporter_id
+      title: PetitionSign
+      type: object
+    PetitionUpdate:
+      properties:
+        decision_makers:
+          items:
+            type: integer
+          title: Decision Makers
+          type: array
+        due_date:
+          format: date
+          title: Due Date
+          type: string
+        signed_goal:
+          title: Signed Goal
+          type: integer
+        status:
+          $ref: '#/components/schemas/api__db__models__petition__Status'
+      title: PetitionUpdate
+      type: object
+    StatusResponse:
+      properties:
+        message:
+          title: Message
+          type: string
+        success:
+          title: Success
+          type: boolean
+      required:
+      - success
+      title: StatusResponse
+      type: object
+    TokenLogin:
+      properties:
+        access_token:
+          title: Access Token
+          type: string
+        refresh_token:
+          title: Refresh Token
+          type: string
+      required:
+      - access_token
+      - refresh_token
+      title: TokenLogin
+      type: object
+    TokenRefresh:
+      properties:
+        access_token:
+          title: Access Token
+          type: string
+      required:
+      - access_token
+      title: TokenRefresh
+      type: object
+    UserBase:
+      properties:
+        email:
+          format: email
+          title: Email
+          type: string
+        firstname:
+          title: Firstname
+          type: string
+        lastname:
+          title: Lastname
+          type: string
+      required:
+      - firstname
+      - lastname
+      - email
+      title: UserBase
+      type: object
+    UserCreate:
+      properties:
+        email:
+          format: email
+          title: Email
+          type: string
+        firstname:
+          title: Firstname
+          type: string
+        lastname:
+          title: Lastname
+          type: string
+        password:
+          title: Password
+          type: string
+      required:
+      - firstname
+      - lastname
+      - email
+      - password
+      title: UserCreate
+      type: object
+    UserInfo:
+      properties:
+        email:
+          format: email
+          title: Email
+          type: string
+        firstname:
+          title: Firstname
+          type: string
+        id:
+          title: Id
+          type: integer
+        lastname:
+          title: Lastname
+          type: string
+      required:
+      - firstname
+      - lastname
+      - email
+      - id
+      title: UserInfo
+      type: object
+    UserInfoAllAllowedFields:
+      properties:
+        email:
+          format: email
+          title: Email
+          type: string
+        firstname:
+          title: Firstname
+          type: string
+        id:
+          title: Id
+          type: integer
+        is_active:
+          title: Is Active
+          type: boolean
+        is_admin:
+          title: Is Admin
+          type: boolean
+        lastname:
+          title: Lastname
+          type: string
+      required:
+      - firstname
+      - lastname
+      - email
+      - id
+      - is_active
+      - is_admin
+      title: UserInfoAllAllowedFields
+      type: object
+    UserUpdateAllAllowedFields:
+      properties:
+        email:
+          format: email
+          title: Email
+          type: string
+        firstname:
+          title: Firstname
+          type: string
+        is_active:
+          title: Is Active
+          type: boolean
+        is_admin:
+          title: Is Admin
+          type: boolean
+        lastname:
+          title: Lastname
+          type: string
+        password:
+          title: Password
+          type: string
+      title: UserUpdateAllAllowedFields
+      type: object
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+    api__db__models__complaint__Status:
+      description: An enumeration.
+      enum:
+      - accepted
+      - rejected
+      - pending
+      title: Status
+    api__db__models__petition__Status:
+      description: An enumeration.
+      enum:
+      - active
+      - closed
+      - pending
+      - victory
+      title: Status
+      type: string
+info:
+  title: ePetition
+  version: 1.0.0
+openapi: 3.0.2
+paths:
+  /auth/login:
+    post:
+      operationId: login_user_auth_login_post
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Body_login_user_auth_login_post'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenLogin'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Login User
+      tags:
+      - auth
+  /auth/refresh:
+    post:
+      operationId: refresh_auth_refresh_post
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefresh'
+          description: Successful Response
+      summary: Refresh
+      tags:
+      - auth
+  /complaints/:
+    get:
+      description: Get all the Complaints stored in database
+      operationId: get_all_complaints_complaints__get
+      parameters:
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          title: Limit
+          type: integer
+      - in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          title: Offset
+          type: integer
+      - in: query
+        name: statuses
+        required: false
+        schema:
+          title: Statuses
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ComplaintInfo'
+                title: Response Get All Complaints Complaints  Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get All Complaints
+      tags:
+      - complaints
+    post:
+      description: Create a Complaint and store it in the database
+      operationId: create_complaint_complaints__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComplaintCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComplaintInfo'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Create Complaint
+      tags:
+      - complaints
+  /complaints/{complaint_id}:
+    delete:
+      description: Delete the Complaint with the given ID
+      operationId: delete_complaint_complaints__complaint_id__delete
+      parameters:
+      - in: path
+        name: complaint_id
+        required: true
+        schema:
+          title: Complaint Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Delete Complaint
+      tags:
+      - complaints
+    get:
+      description: Get the Complaint with the given ID
+      operationId: get_complaint_complaints__complaint_id__get
+      parameters:
+      - in: path
+        name: complaint_id
+        required: true
+        schema:
+          title: Complaint Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComplaintInfo'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Complaint
+      tags:
+      - complaints
+    put:
+      description: Update a Complaint stored in the database
+      operationId: update_complaint_complaints__complaint_id__put
+      parameters:
+      - in: path
+        name: complaint_id
+        required: true
+        schema:
+          title: Complaint Id
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComplaintUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComplaintInfo'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Update Complaint
+      tags:
+      - complaints
+  /decision_makers/:
+    get:
+      description: Get all the Decision makers stored in database
+      operationId: get_all_decision_makers_decision_makers__get
+      parameters:
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          title: Limit
+          type: integer
+      - in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          title: Offset
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/DecisionMakerInfo'
+                title: Response Get All Decision Makers Decision Makers  Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get All Decision Makers
+      tags:
+      - decision_makers
+    post:
+      description: Create a Decision maker and store it in the database
+      operationId: create_decision_maker_decision_makers__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DecisionMakerCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DecisionMakerInfo'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Create Decision Maker
+      tags:
+      - decision_makers
+  /decision_makers/search:
+    get:
+      description: Search decision makers by requested query
+      operationId: search_decision_maker_decision_makers_search_get
+      parameters:
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          title: Limit
+          type: integer
+      - in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          title: Offset
+          type: integer
+      - in: query
+        name: q
+        required: false
+        schema:
+          default: ''
+          title: Q
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/DecisionMakerInfo'
+                title: Response Search Decision Maker Decision Makers Search Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Search Decision Maker
+      tags:
+      - decision_makers
+  /decision_makers/{decision_maker_id}:
+    delete:
+      description: Delete the Decision maker with the given ID
+      operationId: delete_decision_maker_decision_makers__decision_maker_id__delete
+      parameters:
+      - in: path
+        name: decision_maker_id
+        required: true
+        schema:
+          title: Decision Maker Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Delete Decision Maker
+      tags:
+      - decision_makers
+    get:
+      description: Get the Decision maker with the given ID
+      operationId: get_decision_maker_decision_makers__decision_maker_id__get
+      parameters:
+      - in: path
+        name: decision_maker_id
+        required: true
+        schema:
+          title: Decision Maker Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DecisionMakerInfo'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Decision Maker
+      tags:
+      - decision_makers
+    put:
+      description: Update a Decision maker stored in the database
+      operationId: update_decision_maker_decision_makers__decision_maker_id__put
+      parameters:
+      - in: path
+        name: decision_maker_id
+        required: true
+        schema:
+          title: Decision Maker Id
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DecisionMakerUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DecisionMakerInfo'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Update Decision Maker
+      tags:
+      - decision_makers
+  /petitions/:
+    get:
+      description: Get all the Petitions stored in database
+      operationId: get_all_petitions_petitions__get
+      parameters:
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          title: Limit
+          type: integer
+      - in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          title: Offset
+          type: integer
+      - in: query
+        name: ordering
+        required: false
+        schema:
+          title: Ordering
+          type: string
+      - in: query
+        name: statuses
+        required: false
+        schema:
+          title: Statuses
+          type: string
+      - in: query
+        name: creation_date
+        required: false
+        schema:
+          title: Creation Date
+          type: string
+      - in: query
+        name: due_date
+        required: false
+        schema:
+          title: Due Date
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/PetitionInfo'
+                title: Response Get All Petitions Petitions  Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get All Petitions
+      tags:
+      - petitions
+    post:
+      description: Create a Petition and store it in the database
+      operationId: create_petition_petitions__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PetitionCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PetitionInfo'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Create Petition
+      tags:
+      - petitions
+  /petitions/search:
+    get:
+      description: Search petitions by requested query
+      operationId: search_petitions_petitions_search_get
+      parameters:
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          title: Limit
+          type: integer
+      - in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          title: Offset
+          type: integer
+      - in: query
+        name: q
+        required: false
+        schema:
+          default: ''
+          title: Q
+          type: string
+      - in: query
+        name: ordering
+        required: false
+        schema:
+          title: Ordering
+          type: string
+      - in: query
+        name: statuses
+        required: false
+        schema:
+          title: Statuses
+          type: string
+      - in: query
+        name: creation_date
+        required: false
+        schema:
+          title: Creation Date
+          type: string
+      - in: query
+        name: due_date
+        required: false
+        schema:
+          title: Due Date
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/PetitionInfo'
+                title: Response Search Petitions Petitions Search Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Search Petitions
+      tags:
+      - petitions
+  /petitions/{petition_id}:
+    delete:
+      description: Delete the Petition with the given ID
+      operationId: delete_petition_petitions__petition_id__delete
+      parameters:
+      - in: path
+        name: petition_id
+        required: true
+        schema:
+          title: Petition Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Delete Petition
+      tags:
+      - petitions
+    get:
+      description: Get the Petition with the given ID
+      operationId: get_petition_petitions__petition_id__get
+      parameters:
+      - in: path
+        name: petition_id
+        required: true
+        schema:
+          title: Petition Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PetitionInfo'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Petition
+      tags:
+      - petitions
+    put:
+      description: Update a Petition stored in the database
+      operationId: update_petition_petitions__petition_id__put
+      parameters:
+      - in: path
+        name: petition_id
+        required: true
+        schema:
+          title: Petition Id
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PetitionUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PetitionInfo'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Update Petition
+      tags:
+      - petitions
+  /petitions/{petition_id}/sign:
+    post:
+      description: Sign a Petition stored in the database
+      operationId: sign_petition_petitions__petition_id__sign_post
+      parameters:
+      - in: path
+        name: petition_id
+        required: true
+        schema:
+          title: Petition Id
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PetitionSign'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PetitionInfo'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Sign Petition
+      tags:
+      - petitions
+  /users/:
+    get:
+      description: Get all the Users stored in database
+      operationId: get_all_users_users__get
+      parameters:
+      - in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          title: Offset
+          type: integer
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          title: Limit
+          type: integer
+      - in: query
+        name: q
+        required: false
+        schema:
+          default: ''
+          title: Q
+          type: string
+      - in: query
+        name: is_active
+        required: false
+        schema:
+          title: Is Active
+          type: boolean
+      - in: query
+        name: is_admin
+        required: false
+        schema:
+          title: Is Admin
+          type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/UserInfoAllAllowedFields'
+                title: Response Get All Users Users  Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get All Users
+      tags:
+      - users
+    post:
+      description: Create an User and store it in the database
+      operationId: create_user_users__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfo'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Create User
+      tags:
+      - users
+  /users/search:
+    get:
+      description: Search Users by requested query
+      operationId: search_user_users_search_get
+      parameters:
+      - in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          title: Offset
+          type: integer
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          title: Limit
+          type: integer
+      - in: query
+        name: q
+        required: false
+        schema:
+          default: ''
+          title: Q
+          type: string
+      - in: query
+        name: is_active
+        required: false
+        schema:
+          title: Is Active
+          type: boolean
+      - in: query
+        name: is_admin
+        required: false
+        schema:
+          title: Is Admin
+          type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/UserInfoAllAllowedFields'
+                title: Response Search User Users Search Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Search User
+      tags:
+      - users
+  /users/{user_id}:
+    delete:
+      description: Delete the User with the given ID
+      operationId: delete_user_users__user_id__delete
+      parameters:
+      - in: path
+        name: user_id
+        required: true
+        schema:
+          title: User Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Delete User
+      tags:
+      - users
+    get:
+      description: Get the User with the given ID
+      operationId: get_user_users__user_id__get
+      parameters:
+      - in: path
+        name: user_id
+        required: true
+        schema:
+          title: User Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/UserInfoAllAllowedFields'
+                - $ref: '#/components/schemas/UserInfo'
+                title: Response Get User Users  User Id  Get
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get User
+      tags:
+      - users
+    put:
+      description: Update an User stored in the database
+      operationId: update_user_users__user_id__put
+      parameters:
+      - in: path
+        name: user_id
+        required: true
+        schema:
+          title: User Id
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdateAllAllowedFields'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/UserInfoAllAllowedFields'
+                - $ref: '#/components/schemas/UserInfo'
+                title: Response Update User Users  User Id  Put
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Update User
+      tags:
+      - users
